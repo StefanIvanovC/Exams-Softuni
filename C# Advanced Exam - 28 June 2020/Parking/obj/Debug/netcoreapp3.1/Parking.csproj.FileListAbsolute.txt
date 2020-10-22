@@ -1,0 +1,11 @@
+C:\Users\admin\Desktop\Parking\Parking\bin\Debug\netcoreapp3.1\Parking.exe
+C:\Users\admin\Desktop\Parking\Parking\bin\Debug\netcoreapp3.1\Parking.deps.json
+C:\Users\admin\Desktop\Parking\Parking\bin\Debug\netcoreapp3.1\Parking.runtimeconfig.json
+C:\Users\admin\Desktop\Parking\Parking\bin\Debug\netcoreapp3.1\Parking.runtimeconfig.dev.json
+C:\Users\admin\Desktop\Parking\Parking\bin\Debug\netcoreapp3.1\Parking.dll
+C:\Users\admin\Desktop\Parking\Parking\bin\Debug\netcoreapp3.1\Parking.pdb
+C:\Users\admin\Desktop\Parking\Parking\obj\Debug\netcoreapp3.1\Parking.csprojAssemblyReference.cache
+C:\Users\admin\Desktop\Parking\Parking\obj\Debug\netcoreapp3.1\Parking.AssemblyInfoInputs.cache
+C:\Users\admin\Desktop\Parking\Parking\obj\Debug\netcoreapp3.1\Parking.AssemblyInfo.cs
+C:\Users\admin\Desktop\Parking\Parking\obj\Debug\netcoreapp3.1\Parking.dll
+C:\Users\admin\Desktop\Parking\Parking\obj\Debug\netcoreapp3.1\Parking.pdb
