@@ -1,0 +1,10 @@
+CREATE DATABASE Bakery
+
+USE Bakery
+
+CREATE TABLE Products
+(
+	Id INT PRIMARY KEY IDENTITY ,
+
+
+)
