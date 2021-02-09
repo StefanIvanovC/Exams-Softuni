@@ -1,4 +1,4 @@
-SELECT c.Name, COUNT(*) AS Hotels
+SELECT c.Name, COUNT(CityId) AS Hotels
 FROM Hotels AS h
 JOIN Cities AS c ON h.CityId = c.Id
 GROUP BY c.Name
