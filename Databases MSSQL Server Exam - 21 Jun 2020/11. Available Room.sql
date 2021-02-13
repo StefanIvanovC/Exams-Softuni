@@ -15,5 +15,18 @@ BEGIN
 END
 GO
 
-SELECT dbo.udf_GetAvailableRoom(94, '2015-07-26', 3)
+CREATE FUNCTION udf_AllUserCommits(@username VARCHAR) 
+RETURNS INT
+BEGIN
+	DECLARE @countOfComits int = (SELECT u.Username, Count(*)  FROM Users AS u 
+										 JOIN Commits AS c ON c.ContributorId = u.Id
+										 GROUP BY u.Username)
+END
+GO
 
+
+SELECT * FROM USERS
+
+SELECT u.Username, Count(*)  FROM Users AS u 
+										 JOIN Commits AS c ON c.ContributorId = u.Id
+										 GROUP BY u.Username

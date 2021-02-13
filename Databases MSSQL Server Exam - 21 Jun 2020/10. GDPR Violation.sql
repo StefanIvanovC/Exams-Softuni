@@ -17,3 +17,4 @@ END AS [Duration]
 	JOIN Hotels AS h ON h.Id = r.HotelId
 	JOIN Cities AS ch ON ch.Id = h.CityId
 	ORDER BY FullName, TripId, c.Name, ch.Name
+
