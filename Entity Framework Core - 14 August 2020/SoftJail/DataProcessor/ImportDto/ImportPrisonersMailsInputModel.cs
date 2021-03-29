@@ -7,34 +7,46 @@ namespace SoftJail.DataProcessor.ImportDto
 {
     public class ImportPrisonersMailsInputModel
     {
-        public string FullName { get; set; }
-
         [Required]
         [StringLength(20, MinimumLength = 3)]
+        public string FullName { get; set; }
+
+        [RegularExpression("The [A-Z]{1}[a-z]*")]
         public string Nickname { get; set; }
 
+        [Range(18, 65)]
         public int Age { get; set; }
 
         public DateTime IncarcerationDate { get; set; }
 
-        public DateTime ReleaseDate { get; set; }
+        public DateTime? ReleaseDate { get; set; }
 
         public decimal? Bail { get; set; }
 
         public int CellId { get; set; }
 
-        public IEnumerable<MailsInputModel> Mails { get; set; }
+        public List<MailsInputModel> Mails { get; set; }
     }
     public class MailsInputModel
     {
+        [Required]
         public string Description { get; set; }
 
+        [Required]
         public string Sender { get; set; }
 
+        [RegularExpression("^([A-z0-9\\s]+ str.)$")]
         public string Address { get; set; }
 
     }
 }
+
+//Id – integer, Primary Key
+//Description– text (required)
+//Sender – text(required)
+//Address – text, consisting only of letters, spaces and numbers, which ends with “ str.” (required) (Example: “62 Muir Hill str.“)
+//PrisonerId - integer, foreign key(required)
+//Prisoner – the mail's Prisoner (required)
 
 //Id – integer, Primary Key
 //FullName – text with min length 3 and max length 20 (required)

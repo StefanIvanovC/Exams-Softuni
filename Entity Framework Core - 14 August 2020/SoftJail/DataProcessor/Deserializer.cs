@@ -56,18 +56,46 @@
         {
             var sb = new StringBuilder();
 
+            var listOfPrisoners = new List<Prisoner>();
+
             var prisonerMails = JsonConvert
-                .DeserializeObject<ImportPrisonersMailsInputModel>(jsonString);
+                .DeserializeObject<IEnumerable<ImportPrisonersMailsInputModel>>(jsonString);
 
             foreach (var prisoner in prisonerMails)
             {
-                if (!IsValid(prisoner) || prisoner.mails)
+                if (!IsValid(prisoner) || !prisoner.Mails.Any(IsValid) || !prisoner.Mails.Any())
                 {
                     sb.AppendLine("Invalid Data");
                     continue;
                 }
+
+                var prisoners = new Prisoner
+                {
+                    FullName = prisoner.FullName,
+                    Nickname = prisoner.Nickname,
+                    Age = prisoner.Age,
+                    IncarcerationDate = prisoner.IncarcerationDate,
+                    ReleaseDate = prisoner.ReleaseDate,
+                    Bail = prisoner.Bail,
+                    CellId = prisoner.CellId,
+                    Mails = prisoner.Mails.Select(x => new Mail
+                    {
+                        Description = x.Description,
+                        Sender = x.Sender,
+                        Address = x.Address
+                    })
+                    .ToList()
+
+                };
+
+                listOfPrisoners.Add(prisoners);
+                sb.AppendLine($"Imported {prisoner.FullName} {prisoner.Age} years old");
             }
-            
+
+            context.Prisoners.AddRange(listOfPrisoners);
+            context.SaveChanges();
+
+            return sb.ToString().TrimEnd();
         }
 
         public static string ImportOfficersPrisoners(SoftJailDbContext context, string xmlString)
