@@ -4,6 +4,7 @@
     using Data;
     using Newtonsoft.Json;
     using SoftJail.Data.Models;
+    using SoftJail.Data.Models.Enums;
     using SoftJail.DataProcessor.ImportDto;
     using System;
     using System.Collections.Generic;
@@ -11,6 +12,7 @@
     using System.Globalization;
     using System.Linq;
     using System.Text;
+    using XmlFacade;
 
     public class Deserializer
     {
@@ -103,7 +105,42 @@
 
         public static string ImportOfficersPrisoners(SoftJailDbContext context, string xmlString)
         {
-            throw new NotImplementedException();
+            var sb = new StringBuilder();
+
+            var listOfficerPrisoners = new List<Officer>();
+
+            var officerPrisoners = XmlConverter.Deserializer<ImportOfficersPrisonersInputModel>(xmlString, "Officers");
+
+            foreach (var officerPrisoner in officerPrisoners)
+            {
+                if (!IsValid(officerPrisoner))
+                {
+                    sb.AppendLine("Invalid Data");
+                    continue;
+                }
+
+                var offiser = new Officer
+                {
+                    FullName = officerPrisoner.Name,
+                    Salary = officerPrisoner.Money,
+                    Position = Enum.Parse<Position>(officerPrisoner.Position),
+                    Weapon = Enum.Parse<Weapon>(officerPrisoner.Weapon),
+                    DepartmentId = officerPrisoner.DepartmentId,
+                    OfficerPrisoners = officerPrisoner.Prisoners.Select(x => new OfficerPrisoner
+                    {
+                        PrisonerId = x.Id
+                    })
+                    .ToList()
+                };
+
+                listOfficerPrisoners.Add(offiser);
+                sb.AppendLine($"Imported {offiser.FullName} ({offiser.OfficerPrisoners.Count} prisoners)");
+            }
+
+            context.Officers.AddRange(listOfficerPrisoners);
+            context.SaveChanges();
+
+            return sb.ToString().TrimEnd();
         }
 
         private static bool IsValid(object obj)
