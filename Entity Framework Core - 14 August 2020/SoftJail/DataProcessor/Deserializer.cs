@@ -8,6 +8,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.Globalization;
     using System.Linq;
     using System.Text;
 
@@ -69,13 +70,16 @@
                     continue;
                 }
 
+                var IsValidReleaseDate = DateTime.TryParseExact(prisoner.ReleaseDate, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime releaseDate);
+                var incarcerationDate = DateTime.ParseExact(prisoner.IncarcerationDate,"dd/MM/yyyy",CultureInfo.InvariantCulture);
+
                 var prisoners = new Prisoner
                 {
                     FullName = prisoner.FullName,
                     Nickname = prisoner.Nickname,
                     Age = prisoner.Age,
-                    IncarcerationDate = prisoner.IncarcerationDate,
-                    ReleaseDate = prisoner.ReleaseDate,
+                    IncarcerationDate = incarcerationDate,
+                    ReleaseDate = IsValidReleaseDate ? (DateTime?)releaseDate : null,
                     Bail = prisoner.Bail,
                     CellId = prisoner.CellId,
                     Mails = prisoner.Mails.Select(x => new Mail
@@ -85,7 +89,6 @@
                         Address = x.Address
                     })
                     .ToList()
-
                 };
 
                 listOfPrisoners.Add(prisoners);
